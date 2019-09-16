@@ -43,6 +43,7 @@
             <groupId>org.eclipse.dirigible</groupId>
             <artifactId>dirigible-repository-local</artifactId>
             <version>3.5.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
