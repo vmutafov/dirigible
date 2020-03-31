@@ -89,6 +89,12 @@
 		 	<artifactId>dirigible-ide-ui-debugger</artifactId>
 		 	<version>4.4.0-SNAPSHOT</version>
 		</dependency>
+		<!-- Rhino Debugger -->
+		<!-- <dependency>
+			<groupId>org.eclipse.dirigible</groupId>
+			<artifactId>dirigible-ide-ui-debugger-rhione</artifactId>
+			<version>4.4.0-SNAPSHOT</version>
+	   </dependency> -->
 		<dependency>
 		 	<groupId>org.eclipse.dirigible</groupId>
 		 	<artifactId>dirigible-ide-ui-logs</artifactId>

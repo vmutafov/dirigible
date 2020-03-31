@@ -63,6 +63,8 @@
 		<module>ide-monaco</module>
 		<module>ide-ace</module>
 		<module>ide-debugger</module>
+		<!-- Rhino Debugger -->
+		<!-- <module>ide-debugger-rhinoe</module> -->
 		<module>ide-logs</module>
 		<module>ide-jobs</module>
 		<module>ide-extensions</module>
