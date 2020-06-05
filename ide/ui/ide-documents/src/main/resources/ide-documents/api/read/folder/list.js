@@ -44,6 +44,9 @@ function filterByAccessDefinitions(folder) {
 	let accessDefinitions = JSON.parse(repositoryContent.getText("ide-documents/security/roles.access"));
 	folder.children = folder.children.filter(e => {
 		let path = (folder.path + "/" + e.name).replaceAll("//", "/");
+		if (path.startsWith("/__internal")) {
+			return false;
+		}
 		if (!path.startsWith("/")) {
 			path = "/" + path;
 		}
@@ -65,11 +68,13 @@ function hasAccessPermissions(constraints, path) {
 		if (constraintPath.endsWith("/")) {
 			constraintPath = constraintPath.substr(0, constraintPath.length - 1);
 		}
-		if (path.length >= constraintPath.length && constraintPath.startsWith(path) && (method.toUpperCase() === "READ" || method === "*")) {
-			let roles = constraints[i].roles;
-			for (let j = 0; j < roles.length; j ++) {
-				if (!request.isUserInRole(roles[i])) {
-					return false;
+		if (path.length >= constraintPath.length && constraintPath.startsWith(path)) {
+			if (method !== null && method !== undefined && (method.toUpperCase() === "READ" || method === "*")) {				
+				let roles = constraints[i].roles;
+				for (let j = 0; j < roles.length; j ++) {
+					if (!request.isUserInRole(roles[i])) {
+						return false;
+					}
 				}
 			}
 		}
