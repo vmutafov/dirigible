@@ -9,10 +9,15 @@
  * SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Eclipse Dirigible contributors
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.eclipse.dirigible.engine.js.graalvm.processor.generation;
+package org.eclipse.dirigible.engine.js.graalium.execution;
 
-public class MultipleMatchingApiPathsException extends RuntimeException {
-    public MultipleMatchingApiPathsException(String errorMessage) {
-        super(errorMessage);
-    }
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
+
+import java.nio.file.Path;
+
+public interface CodeRunner extends CodeRunnerAutoCloseable {
+    Value run(Path codeFilePath);
+
+    Value run(Source codeSource);
 }

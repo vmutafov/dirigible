@@ -727,6 +727,7 @@
 		<jackson.databind.version>2.13.2.2</jackson.databind.version>
 		<spring.boot.version>2.6.6</spring.boot.version>
 		<webjars-locator>0.30</webjars-locator>
+		<graalvm.version>22.0.0.2</graalvm.version>
 
 		<profile.content.phase>none</profile.content.phase>
 
