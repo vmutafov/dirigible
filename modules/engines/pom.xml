@@ -24,6 +24,7 @@
 		<module>engine-command</module>
 		<module>engine-odata</module>
         <module>engine-javascript-graalium</module>
+        <module>engine-javascript-graalium-dirigible</module>
     </modules>
 
 	<properties>

@@ -20,7 +20,7 @@ var Require = (function (modulePath) {
         if (moduleInfo) {
             return moduleInfo;
         }
-        code = Java.type('org.eclipse.dirigible.engine.js.graalium.execution.internal.modules.DirigibleModuleProvider').loadSource(path);
+        code = Java.type('org.eclipse.dirigible.engine.js.graalium.platform.internal.modules.DirigibleModuleProvider').loadSource(path);
         moduleInfo = {
             loaded: false,
             id: path,
