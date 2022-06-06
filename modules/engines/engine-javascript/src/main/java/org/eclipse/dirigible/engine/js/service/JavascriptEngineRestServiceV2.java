@@ -4,7 +4,6 @@ import org.eclipse.dirigible.api.v3.http.HttpRequestFacade;
 import org.eclipse.dirigible.commons.api.service.AbstractRestService;
 import org.eclipse.dirigible.commons.api.service.IRestService;
 import org.eclipse.dirigible.commons.config.StaticObjects;
-import org.eclipse.dirigible.engine.api.resource.ResourcePath;
 import org.eclipse.dirigible.engine.js.graalium.CodeRunner;
 import org.eclipse.dirigible.engine.js.graalium.platform.DirigibleCodeRunnerFactory;
 import org.eclipse.dirigible.engine.js.graalium.platform.internal.modules.DirigibleSourceProvider;
@@ -119,7 +118,7 @@ public class JavascriptEngineRestServiceV2 extends AbstractRestService {
     }
 
     @HEAD
-    @Path(HTTP_PATH_MATCHER + "/{projectFilePathParam}")
+    @Path(HTTP_PATH_MATCHER)
     public Response head(
             @PathParam("projectName") String projectName,
             @PathParam("projectFilePath") String projectFilePath
@@ -154,8 +153,20 @@ public class JavascriptEngineRestServiceV2 extends AbstractRestService {
 
             Source jsSource = Source.newBuilder("js", maybeJSCode, projectFilePath).build();
 
-            CodeRunner codeRunner = createJavaScriptCodeRunner(projectName);
-            codeRunner.run(jsSource);
+            if ("test".equals(projectName)) {
+                CodeRunnerPool.CodeRunnerPoolable codeRunnerPoolable = CodeRunnerPool.get();
+                try {
+                    CodeRunner codeRunner = codeRunnerPoolable.getCodeRunner();
+                    codeRunner.run(jsSource);
+                } finally {
+                    if (codeRunnerPoolable != null) {
+                        codeRunnerPoolable.release();
+                    }
+                }
+            } else {
+                CodeRunner codeRunner = createJavaScriptCodeRunner(projectName);
+                codeRunner.run(jsSource);
+            }
 
             return Response.ok().build();
         } catch (Throwable e) {
@@ -166,7 +177,7 @@ public class JavascriptEngineRestServiceV2 extends AbstractRestService {
         }
     }
 
-    private CodeRunner createJavaScriptCodeRunner(String projectName) {
+    private static CodeRunner createJavaScriptCodeRunner(String projectName) {
         IRepository repository = (IRepository) StaticObjects.get(StaticObjects.REPOSITORY);
         java.nio.file.Path projectPath = java.nio.file.Path.of(projectName);
         java.nio.file.Path repositoryRootPath = java.nio.file.Path.of(repository.getRepositoryPath());

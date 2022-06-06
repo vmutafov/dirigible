@@ -9,6 +9,9 @@
  * SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Eclipse Dirigible contributors
  * SPDX-License-Identifier: EPL-2.0
  */
+const DirigibleSourceProvider = Java.type("org.eclipse.dirigible.engine.js.graalium.platform.internal.modules.DirigibleSourceProvider");
+const dirigibleSourceProvider = new DirigibleSourceProvider();
+
 var Require = (function (modulePath) {
     var _loadedModules = {};
     var _require = function (path) {
@@ -20,7 +23,14 @@ var Require = (function (modulePath) {
         if (moduleInfo) {
             return moduleInfo;
         }
-        code = Java.type('org.eclipse.dirigible.engine.js.graalium.platform.internal.modules.DirigibleModuleProvider').loadSource(path);
+        code = dirigibleSourceProvider.getSource(path);
+        if (path === 'jasmine/jasmine-4.1.1') {
+            path = '/Users/c5326377/work/dirigible/dirigible/ext/ext-modules/ext-jasmine/src/main/resources/META-INF/dirigible/jasmine/jasmine-4.1.1.js';
+        } else if (path === 'jasmine/jasmine-boot') {
+            path = '/Users/c5326377/work/dirigible/dirigible/ext/ext-modules/ext-jasmine/src/main/resources/META-INF/dirigible/jasmine/jasmine-boot.js';
+        }
+
+
         moduleInfo = {
             loaded: false,
             id: path,

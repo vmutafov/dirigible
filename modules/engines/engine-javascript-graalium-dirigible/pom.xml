@@ -34,11 +34,24 @@
             <artifactId>dirigible-commons-api</artifactId>
             <version>7.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.dirigible</groupId>
+            <artifactId>dirigible-repository-local</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.dirigible</groupId>
+            <artifactId>dirigible-ext-jasmine</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <license.header.location>../../../licensing-header.txt</license.header.location>
     </properties>
 
 </project>

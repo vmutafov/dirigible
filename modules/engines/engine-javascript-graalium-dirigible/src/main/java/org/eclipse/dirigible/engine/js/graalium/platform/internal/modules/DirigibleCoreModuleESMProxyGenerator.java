@@ -30,6 +30,7 @@ public class DirigibleCoreModuleESMProxyGenerator {
     private static final String EXPORT_PATTERN =
             "export const " + NAME_PLACEHOLDER + " = dirigibleRequire('" + PATH_PLACEHOLDER + "');";
     private final Gson gson = new Gson();
+    private final DirigibleSourceProvider dirigibleSourceProvider = new DirigibleSourceProvider();
 
     public String generate(String path, String apiVersion) {
         DirigibleApiModule[] modules = readApiModuleJson(path + API_MODULES_JSON_PATH);
@@ -62,7 +63,7 @@ public class DirigibleCoreModuleESMProxyGenerator {
     }
 
     private DirigibleApiModule[] readApiModuleJson(String path) {
-        String apiModuleJson = DirigibleModuleProvider.getResourceContent(IRepositoryStructure.PATH_REGISTRY_PUBLIC, path);
+        String apiModuleJson = dirigibleSourceProvider.getSource(path);
         return gson.fromJson(apiModuleJson, DirigibleApiModule[].class);
     }
 
